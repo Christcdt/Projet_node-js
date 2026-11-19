@@ -4,6 +4,11 @@
     "module": "nodenext",
     "strict": true,
     "noEmit": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "types": [
+      "node"
+    ],
     "erasableSyntaxOnly": true,
     "verbatimModuleSyntax": true,
     "rewriteRelativeImportExtensions": true,
