@@ -1,28 +1,20 @@
 # Thomas
 
-## PR1.2 — Contrat Context, Controller, HttpResponse
+## Travail réalisé le 19 novembre 2026
 
-Branche : `1.2/contrat-context-controller-httpresponse`
+Sur la branche `1.2/contrat-context-controller-httpresponse`, j’ai défini le contrat HTTP du framework :
 
-### Modifications
+- J’ai ajouté les types dans `packages/framework/src/http/types.ts` : méthodes HTTP, paramètres de requête, configuration, utilisateur, fichiers, informations de route et corps de réponse.
+- J’ai décrit `Context<P, B>` pour fournir les données de la requête au contrôleur et aux middlewares, avec une structure déclarée en lecture seule.
+- J’ai défini `Controller<P, B>` comme une fonction qui reçoit un contexte et renvoie une `HttpResponse`, directement ou via une promesse.
+- J’ai ajouté les fabriques dans `packages/framework/src/http/responses.ts` : `json()` renvoie une réponse JSON avec le statut `200` par défaut, `created()` renvoie `201` avec un en-tête `location`, et `noContent()` renvoie `204` sans corps.
+- J’ai exporté les types et les fabriques depuis `packages/framework/src/index.ts`.
+- J’ai complété la configuration TypeScript stricte pour typer `Buffer` et `Readable`, et contrôler les propriétés optionnelles ainsi que les accès par index.
 
-- Ajout du contrat HTTP dans `packages/framework/src/http/types.ts` :
-  - `HttpMethod` limite les méthodes prises en charge par le framework.
-  - `QueryParams` définit l'interface prévue pour la lecture des paramètres de requête.
-  - `FrameworkConfig`, `AuthUser`, `StoredFile` et `RouteInfo` fixent les données exposées au contexte.
-  - `Serializer` et `ResponseBody` rendent la réponse extensible : JSON, texte, HTML ou flux pourront être branchés sans changer les contrôleurs.
-  - `Context<P, B>` expose les données en lecture seule aux contrôleurs et middlewares.
-  - `Controller<P, B>` impose une seule voie de traitement : recevoir un contexte et renvoyer une `HttpResponse`, synchronement ou non.
-- Ajout des fabriques dans `packages/framework/src/http/responses.ts` :
-  - `json(data, status = 200)` sérialise par défaut en JSON UTF-8.
-  - `created(data, location)` renvoie `201` avec l'en-tête `location`.
-  - `noContent()` renvoie `204` sans corps.
-- Export public des types et fabriques depuis `packages/framework/src/index.ts`.
-- Chargement explicite de `@types/node` dans `tsconfig.json`, nécessaire pour typer `Buffer` et `Readable`.
-- Activation de `noUncheckedIndexedAccess` et `exactOptionalPropertyTypes`, conformément à la configuration stricte attendue.
+Le typecheck passe avec `npm run typecheck`. La commande `npm test` est encore factice ; la suite de tests sera ajoutée dans un ticket ultérieur.
 
-### Vérifications
-
-- `npm ci`
-- `npm run typecheck`
-- `npm test` : commande actuellement factice, à remplacer par le ticket Vitest prévu dans le planning.
+```bash
+npm ci
+npm run typecheck
+npm test # commande actuellement factice, à remplacer par le ticket Vitest prévu dans le planning
+```
