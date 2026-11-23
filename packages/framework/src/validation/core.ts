@@ -1,4 +1,3 @@
-// core.ts
 export type Issue = Readonly<{ path: string; code: string; message: string }>; 
 export type Result<T> = { ok: true; value: T } | { ok: false; issues: readonly Issue[] };
 
@@ -14,7 +13,6 @@ export const fail = (path: string, code: string, message: string): Result<never>
   ({ ok: false, issues: [{ path, code, message }] });
 
 export function schema<T>(runFn: (input: unknown, path: string) => Result<T>): Schema<T> {
-    console.log("runFn reçue :", runFn);
     return {
         run: runFn,
         safeParse: (input: unknown) => runFn(input, ""),
