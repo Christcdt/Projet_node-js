@@ -92,7 +92,12 @@ function nextNode<T>(
     }
 
     const child = createNode<T>();
-    node.params.push({ name: segment.name, suffix: segment.suffix, node: child });
+    const position = node.params.findIndex(
+      (candidate) => candidate.suffix.length < segment.suffix.length,
+    );
+    const candidate = { name: segment.name, suffix: segment.suffix, node: child };
+    if (position === -1) node.params.push(candidate);
+    else node.params.splice(position, 0, candidate);
     return child;
   }
 
